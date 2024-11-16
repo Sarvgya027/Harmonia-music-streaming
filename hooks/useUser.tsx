@@ -6,7 +6,7 @@ import {
   useUser as useSupaUser,
 } from "@supabase/auth-helpers-react";
 import { Subscription } from "@supabase/auth-js";
-import { createContext, use, useEffect, useState } from "react";
+import { createContext, use, useContext, useEffect, useState } from "react";
 
 type UserContextType = {
   accessToken: string | null;
@@ -71,9 +71,19 @@ export const MyUserContextProvider = (props: Props) => {
     accessToken,
     user,
     userDetails,
-    isloading: isLoadingUser || isLoadingData,
+    isLoading: isLoadingUser || isLoadingData,
     subscription
   }
 
   return <userContext.Provider value={value} {...props} />
 };
+
+export const useUser = () => {
+  const context = useContext(userContext)
+
+  if(!context || context === undefined){
+    throw new Error('useUser hook must be used inside the MyUserContext provider')
+  }
+
+  return context;
+}
