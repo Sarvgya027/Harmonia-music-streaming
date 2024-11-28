@@ -5,6 +5,7 @@ import { Sidebar } from "@/components/Sidebar";
 import SupabaseProvier from "@/providers/SupabaseProvider";
 import UserProvider from "@/providers/UserProvider";
 import ModalProvider from "@/providers/ModalProvider";
+import ToasterProvider from "@/providers/ToasterProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -32,6 +33,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <ToasterProvider />
         <SupabaseProvier>
           <UserProvider>
             <ModalProvider />

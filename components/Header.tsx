@@ -11,6 +11,7 @@ import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useUser } from "@/hooks/useUser";
 import { RiH1 } from "react-icons/ri";
 import { FaUserAlt } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 interface HeaderProps {
   children: React.ReactNode;
@@ -29,7 +30,11 @@ const Header = ({ children, className }: HeaderProps) => {
     router.refresh();
     // reset playing songs
 
-    if (error) console.log(error);
+    if (error) {
+      toast.error(error.message)
+    } else {
+      toast.success('Logged Out Successfully')
+    }
   };
 
   return (
@@ -79,7 +84,7 @@ const Header = ({ children, className }: HeaderProps) => {
           {user ? (
             <div className="flex gap-x-4 items-center">
               <Button onClick={handleLogout}>Log out</Button>
-              <button onClick={() => router.push('/account')} className="bg-orange" ><FaUserAlt /></button>
+              <button onClick={() => router.push('/account')} ><FaUserAlt /></button>
             </div>
           ) : (
             <>
