@@ -4,6 +4,7 @@ import "./globals.css";
 import { Sidebar } from "@/components/Sidebar";
 import SupabaseProvier from "@/providers/SupabaseProvider";
 import UserProvider from "@/providers/UserProvider";
+import ModalProvider from "@/providers/ModalProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -33,6 +34,7 @@ export default function RootLayout({
       >
         <SupabaseProvier>
           <UserProvider>
+            <ModalProvider />
             <Sidebar>{children}</Sidebar>
           </UserProvider>
         </SupabaseProvier>
