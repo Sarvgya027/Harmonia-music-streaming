@@ -1,12 +1,16 @@
-'use client';
+"use client";
 
-import { useRouter } from 'next/navigation';
-import { BiSearch } from 'react-icons/bi';
-import { HiHome } from 'react-icons/hi';
-import { RxCaretLeft, RxCaretRight } from 'react-icons/rx';
-import { twMerge } from 'tailwind-merge';
-import Button from '../components/Button';
-import UseAuthModal from '@/hooks/useAuthModal';
+import { useRouter } from "next/navigation";
+import { BiSearch } from "react-icons/bi";
+import { HiHome } from "react-icons/hi";
+import { RxCaretLeft, RxCaretRight } from "react-icons/rx";
+import { twMerge } from "tailwind-merge";
+import Button from "../components/Button";
+import UseAuthModal from "@/hooks/useAuthModal";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { useUser } from "@/hooks/useUser";
+import { RiH1 } from "react-icons/ri";
+import { FaUserAlt } from "react-icons/fa";
 
 interface HeaderProps {
   children: React.ReactNode;
@@ -15,18 +19,34 @@ interface HeaderProps {
 
 const Header = ({ children, className }: HeaderProps) => {
   const router = useRouter();
-  const {onOpen} = UseAuthModal();
+  const { onOpen } = UseAuthModal();
+
+  const supabaseClient = useSupabaseClient();
+  const { user } = useUser();
+
+  const handleLogout = async () => {
+    const { error } = await supabaseClient.auth.signOut();
+    router.refresh();
+    // reset playing songs
+
+    if (error) console.log(error);
+  };
 
   return (
-    <div className={twMerge(`
+    <div
+      className={twMerge(
+        `
       h-20 bg-gradient-to-b from-slate-900 to-transparent 
       backdrop-blur-sm border-b border-slate-800/40
       px-4 py-6
-    `, className)}>
+    `,
+        className
+      )}
+    >
       <div className="w-full h-full flex items-center justify-between">
         {/* Navigation Buttons - Desktop */}
         <div className="hidden md:flex gap-x-3 items-center">
-          <button 
+          <button
             onClick={() => router.back()}
             className="rounded-xl bg-slate-800/50 p-2.5
               hover:bg-slate-700/50 transition-colors duration-200
@@ -34,7 +54,7 @@ const Header = ({ children, className }: HeaderProps) => {
           >
             <RxCaretLeft size={24} className="text-slate-200" />
           </button>
-          <button 
+          <button
             onClick={() => router.forward()}
             className="rounded-xl bg-slate-800/50 p-2.5
               hover:bg-slate-700/50 transition-colors duration-200
@@ -56,24 +76,31 @@ const Header = ({ children, className }: HeaderProps) => {
 
         {/* Auth Buttons */}
         <div className="flex items-center gap-x-2">
-          <Button 
-            onClick={onOpen} 
-            className="bg-transparent hover:bg-slate-800/50 text-slate-200 px-4 py-2.5 w-auto"
-          >
-            Sign up
-          </Button>
-          <Button 
-            onClick={onOpen} 
-            className="bg-indigo-500 hover:bg-indigo-400 text-white px-4 py-2.5 w-auto
+          {user ? (
+            <div className="flex gap-x-4 items-center">
+              <Button onClick={handleLogout}>Log out</Button>
+              <button onClick={() => router.push('/account')} className="bg-orange" ><FaUserAlt /></button>
+            </div>
+          ) : (
+            <>
+              <Button
+                onClick={onOpen}
+                className="bg-transparent hover:bg-slate-800/50 text-slate-200 px-4 py-2.5 w-auto"
+              >
+                Sign up
+              </Button>
+              <Button
+                onClick={onOpen}
+                className="bg-indigo-500 hover:bg-indigo-400 text-white px-4 py-2.5 w-auto
               shadow-lg shadow-indigo-500/20"
-          >
-            Log in
-          </Button>
+              >
+                Log in
+              </Button>
+            </>
+          )}
         </div>
       </div>
-      <div className="mt-10">
-        {children}
-      </div>
+      <div className="mt-10">{children}</div>
     </div>
   );
 };
