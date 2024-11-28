@@ -1,8 +1,22 @@
+import UseAuthModal from '@/hooks/useAuthModal';
+import UseUploadModal from '@/hooks/useUploadModal';
+import { useUser } from '@/hooks/useUser';
 import { BsPlusSquare } from 'react-icons/bs';
 import { TbPlaylist } from 'react-icons/tb';
 
 const Library = () => {
-  const onClick = () => {};
+  const authModal = UseAuthModal();
+  const uploadModal = UseUploadModal();
+  const {user} = useUser();
+  const onClick = () => {
+    if(!user){
+      return authModal.onOpen();
+      
+    }
+    // chec for subscription
+
+    return uploadModal.onOpen();
+  };
 
   return (
     <div className="flex flex-col">
