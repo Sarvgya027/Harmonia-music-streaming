@@ -1,11 +1,16 @@
 import React from 'react'
+import {create} from "zustand";
 
-const useAuthModal = () => {
-  return (
-    <div>
-      
-    </div>
-  )
+interface AuthModalStore {
+  isOpen: boolean;
+  onOpen: () => void;
+  onClose: () => void;
 }
 
-export default useAuthModal
+const UseAuthModal = create<AuthModalStore>((set) => ({
+  isOpen: false,
+  onOpen: () => set({ isOpen: true}),
+  onClose: () => set({ isOpen: false})
+})) 
+
+export default UseAuthModal;
