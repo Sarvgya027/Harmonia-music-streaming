@@ -1,8 +1,14 @@
+import getSongs from "@/actions/getSongs";
 import Header from "@/components/Header";
 import ListItem from "@/components/ListItem";
-import Image from "next/image";
+import PageContent from "./components/PageContent";
 
-export default function Home() {
+export const revalidate = 0;
+
+export default async function Home() {
+  const songs = await getSongs();
+
+  console.log('lone aas', songs)
   return (
     <div className="bg-slate-950 min-h-full w-full overflow-hidden overflow-y-auto">
       <Header>
@@ -15,15 +21,19 @@ export default function Home() {
               image="/images/liked.png"
               name="Liked Songs"
               href="/liked"
-            /> 
+            />
             {/* Add more ListItems as needed */}
           </div>
         </div>
         <div className="mt-2 mb-7 px-6">
           <div className="flex justify-between items-center">
-            <h1 className="text-white font-semibold">Latest Songs</h1>
+            <h1 className="text-white ml-6 font-semibold">Latest Songs</h1>
           </div>
-          <div>list of songs</div>
+          <div className="mt-2 mb-7 px-6">
+
+            
+            <PageContent songs={songs} />
+          </div>
         </div>
       </Header>
     </div>
