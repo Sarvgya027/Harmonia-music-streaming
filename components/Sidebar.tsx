@@ -13,10 +13,10 @@ import { Song } from "@/types";
 
 interface SidebarProps {
   children: React.ReactNode;
-  song: Song[]
+  songs: Song[]
 }
 
-export const Sidebar = ({ children, song }: SidebarProps) => {
+export const Sidebar = ({ children, songs }: SidebarProps) => {
   const pathname = usePathname();
 
   const routes = useMemo(() => [
