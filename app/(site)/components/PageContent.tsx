@@ -1,5 +1,6 @@
 "use client";
 
+import SongItem from "@/components/SongItem";
 import { Song } from "@/types";
 
 interface PageContentProps {
@@ -25,46 +26,11 @@ const PageContent: React.FC<PageContentProps> = ({ songs }) => {
   "
     >
       {songs.map((song) => (
-        <div
-          key={song.id}
-          className="
-          group
-          relative
-          flex
-          flex-col
-          items-center
-          justify-center
-          rounded-xl
-          overflow-hidden
-          bg-slate-800/30
-          hover:bg-slate-800/50
-          transition-colors
-          duration-300
-          cursor-pointer
-          p-3
-          border
-          border-slate-700/30
-        "
-        >
-          <div
-            className="
-          relative 
-          aspect-square 
-          w-full
-          h-full 
-          rounded-xl 
-          overflow-hidden
-        "
-          ></div>
-          <div className="flex flex-col items-start w-full pt-4 gap-y-1">
-            <p className="font-semibold truncate w-full text-slate-200">
-              {song.title}
-            </p>
-            <p className="text-sm text-slate-400 truncate w-full">
-              By {song.author}
-            </p>
-          </div>
-        </div>
+        <SongItem
+        key={song.id}
+        onClick={() => {}}
+        data={song}
+         />
       ))}
     </div>
   );
