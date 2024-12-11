@@ -1,14 +1,16 @@
-import getSongs from "@/actions/getLikedSongs";
+import getSongs from "@/actions/getSongs";
 import Header from "@/components/Header";
+import ListItem from "@/components/ListItem";
 import Image from "next/image";
 import LikedContent from "./components/LikedContent";
 
 export const revalidate = 0;
 
-const Liked = async () => {
+export default async function Home() {
   const songs = await getSongs();
+
   return (
-    <div className="bg-neutral-900 rounded-lg h-full w-full overflow-hidden overflow-y-auto">
+    <div className="bg-slate-950 min-h-full w-full overflow-hidden overflow-y-auto">
       <Header>
         <div className="mt-20">
           <div className="flex flex-col md:flex-row items-center gap-x-5">
@@ -17,16 +19,16 @@ const Liked = async () => {
                 fill
                 src="/images/liked.png"
                 alt="playlist"
-                className="object-cover"
+                className="object-cover rounded-xl"
               />
             </div>
             <div className="flex flex-col gap-y-2 mt-4 md:mt-0">
-              <p className="hidden md:block font-semibold text-sm">
+              <p className="hidden md:block font-medium text-sm text-slate-400">
                 Playlist
-
               </p>
-              <h1 className="text-white text-4xl sm:text-5xl">Liked Songs</h1>
-
+              <h1 className="text-slate-200 text-4xl sm:text-5xl font-bold">
+                Liked Songs
+              </h1>
             </div>
           </div>
         </div>
@@ -35,6 +37,4 @@ const Liked = async () => {
       <LikedContent songs={songs} />
     </div>
   );
-};
-
-export default Liked;
+}

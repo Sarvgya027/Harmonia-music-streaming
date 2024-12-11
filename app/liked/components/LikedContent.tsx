@@ -21,26 +21,39 @@ const LikedContent:React.FC<likedContentProps> = ({songs}) => {
     }
   }, [isLoading, user, router]);
    
-
   if(songs.length === 0){
     return (
-      <div className='flex flex-col gap-y-2 w-full px-6 text-neutral-400'>
-        No Liked Songs
+      <div className="flex flex-col gap-y-2 w-full px-6">
+        <h1 className="text-slate-400 text-2xl font-medium">
+          No liked songs yet
+        </h1>
+        <p className="text-slate-500">
+          Your favorite tracks will appear here
+        </p>
       </div>
     )
   }
 
   return (
-    <div className='flex mt-64 flex-col gap-y-2 w-full p-6'>
-
+    <div className="flex flex-col gap-y-2 w-full mt-60 p-6">
       {songs.map((song) => (
-        <div key={song.id} className='flex items-center gap-x-4 w-full'>
-          <div className='flex-1 '>
-            <MediaItem onClick={() => {}}  data={song} />
-
+        <div 
+          key={song.id} 
+          className="
+            flex items-center gap-x-4 w-full 
+            bg-slate-800/20 
+            hover:bg-slate-800/40 
+            rounded-md 
+            transition-colors
+            duration-300
+          "
+        >
+          <div className="flex-1">
+            <MediaItem onClick={() => {}} data={song} />
           </div>
-          <LikeButton songId={song.id}  />
-
+          <div className="mx-4">
+            <LikeButton songId={song.id} />
+          </div>
         </div>
       ))}
     </div>
@@ -48,3 +61,5 @@ const LikedContent:React.FC<likedContentProps> = ({songs}) => {
 }
 
 export default LikedContent
+
+//bug in this for like button not changing the songs list in liked page
