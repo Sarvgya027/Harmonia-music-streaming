@@ -127,7 +127,7 @@ interface SearchProps {
 }
 
 const Search = async ({ searchParams }: SearchProps) => {
-  const title = searchParams?.title || ''; 
+  const title = await searchParams?.title || ''; 
   const songs = await getSongsByTitle(title);
 
   return (
