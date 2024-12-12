@@ -60,30 +60,36 @@ const PlayerContent: React.FC<PlayerContentProps> = ({song, songUrl}) => {
     {
       volume: volume,
       onPlay: () => setIsPlaying(true),
-      onend: () => {
+      onEnd: () => {
         setIsPlaying(false);
         onPlayNext();
       },
-      onpause: () => setIsPlaying(false),
+      onPause: () => setIsPlaying(false),
       format: ['mp3']
     }
-  );
+);
 
-  const handlePlay = () => {
-    if (!isPlaying) {
-      play();
-    } else {
-      pause();
-    }
-  };
+
+const handlePlay = () => {
+  if(!isPlaying){
+    play();
+  } else {
+    pause();
+  }
+  setIsPlaying(!isPlaying); 
+};
+
+useEffect(() => {
+  if (sound) {
+    setIsPlaying(true);
+    sound.play();
+  }
   
-  useEffect(() => {
-    sound?.play();
-    
-    return () => {
-      sound?.unload();
-    }
-  }, [sound]);
+  return () => {
+    sound?.unload();
+  }
+}, [sound]);
+
   
 
   const toggleMute = () => {
